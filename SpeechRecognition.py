@@ -3,6 +3,7 @@ import keyboard
 import pyaudio
 import wave
 import speech_recognition as sr
+import langchain.memory
 
 class SpeechRecognition: 
 
@@ -29,10 +30,6 @@ class SpeechRecognition:
         return s
 
     def recordSpeech(self):    
-        print("Welcome to Speech Recording!")
-        print("When ready to record, hit the space-key")
-        print("When you are done recording, hit ctrl+c")
-        print("Type Anything else to exit the code!")
         # Calls function 
         audio = pyaudio.PyAudio()
         # Gets read to set up audio 
@@ -41,7 +38,7 @@ class SpeechRecognition:
 
         pressed = keyboard.read_key()   # Reads user keypress
         if (str(pressed) == "space"):   # if key 'spacebar' is pressed 
-            print("~~~~~ Recording in Session ~~~~~")
+
             try:
                 # Whlie there is no error, keep running the code
                 while True:
@@ -50,9 +47,8 @@ class SpeechRecognition:
                 # When keyboard interuupts code, exit and stop recording
             except KeyboardInterrupt:
                 pass
-
-            print("~~~~~ Recording Finished ~~~~~")
-
+            
+            print("")
             # Exits the stream and audio
             stream.stop_stream()
             stream.close()
@@ -82,16 +78,13 @@ class SpeechRecognition:
         engine.runAndWait()                         # run and wait
 
     def RunSpeechRecognition(self):
-        condition = True
-        # Keep repeating untill otherwise
-        while(condition == True):
-            # if user does not want to record speech then stop code
-            condition = self.recordSpeech()
-            # When codition is true 
-            if(condition == True):
-                s = self.speechToText() 
-                #self.speakFunction(s)
-                return s
+         # if user does not want to record speech then stop code
+        condition = self.recordSpeech()
+        # When codition is true 
+        if(condition == True):
+            s = self.speechToText() 
+            #self.speakFunction(s)
+            return s
 
 
 def main():

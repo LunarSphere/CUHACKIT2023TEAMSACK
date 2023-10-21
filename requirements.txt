@@ -1,0 +1,10 @@
+openai
+langchain
+pyttsx3
+keyboard
+pyaudio
+wave
+wolframalpha
+pyowm
+opencv-python 
+scikit-image

@@ -11,7 +11,7 @@ from langchain.agents import load_tools
 from langchain.agents import initialize_agent
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from langchain.llms import OpenAI
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 os.environ["WOLFRAM_ALPHA_APPID"] = "X6TXQJ-KYXJ4V82JE"
 os.environ["OPENWEATHERMAP_API_KEY"] = "ec19bf77a134b62f592e67be39a2b4d1"
 
@@ -30,6 +30,9 @@ class Agents:
         agent_chain.run(instring)
 
     def dalle(self, instring):
+        llm = OpenAI(temperature=0)
         tools = load_tools(['dalle-image-generator'])
         agent = initialize_agent(tools, llm, agent="zero-shot-react-description", verbose=True)
         output = agent.run(instring)
+
+        return output
